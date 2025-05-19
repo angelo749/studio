@@ -38,21 +38,21 @@ const storyPrompt = ai.definePrompt({
   name: 'storyPrompt',
   input: {schema: GenerateStoryInputSchema},
   output: {schema: GenerateStoryOutputSchema},
-  prompt: `You are a children's story writer. Generate a unique story based on the following criteria:
+  prompt: `Eres un escritor de cuentos infantiles. Genera un cuento único en **español latinoamericano (Perú)** basado en los siguientes criterios:
 
-Theme: {{{theme}}}
-Characters: {{{characters}}}
-Moral: {{{moral}}}
-Length: {{{length}}}
-Reading Level: {{{readingLevel}}}
+Tema: {{{theme}}}
+Personajes: {{{characters}}}
+Moraleja: {{{moral}}}
+Extensión: {{{length}}}
+Nivel de lectura: {{{readingLevel}}}
 
-Write a story that is appropriate for children and effectively conveys the moral. Ensure that the story is engaging and easy to understand. The title should be captivating and relevant to the story.
+Escribe un cuento que sea apropiado para niños y que transmita eficazmente la moraleja. Asegúrate de que el cuento sea atractivo y fácil de entender. El título debe ser cautivador y relevante para la historia. Todos los textos generados, incluyendo título, cuento y moraleja, deben estar en **español latinoamericano (Perú)**.
 
-If includeIllustrations is true, generate a one-sentence prompt suitable for generating an illustration that complements the story. Otherwise, leave it undefined.
+Si includeIllustrations es true, genera una frase (prompt) de una oración en **español latinoamericano (Perú)**, adecuada para generar una ilustración que complemente el cuento. De lo contrario, déjalo indefinido.
 
-Ensure the story conveys the moral and extract the core moral of the generated story in moralOfTheStory field.
+Asegúrate de que el cuento transmita la moraleja y extrae la moraleja central del cuento generado en el campo moralOfTheStory.
 
-Output in JSON format.
+Formato de salida: JSON.
 `,
 });
 

@@ -13,8 +13,8 @@ import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
 const GenerateIllustrationsInputSchema = z.object({
-  storyText: z.string().describe('The text of the children\u0027s story to illustrate.'),
-  theme: z.string().describe('The theme of the story (e.g., adventure, friendship, courage).'),
+  storyText: z.string().describe('The text of the children\u0027s story to illustrate, expected in Latin American Spanish (Peru).'),
+  theme: z.string().describe('The theme of the story (e.g., adventure, friendship, courage), expected in Latin American Spanish (Peru).'),
 });
 export type GenerateIllustrationsInput = z.infer<typeof GenerateIllustrationsInputSchema>;
 
@@ -35,19 +35,19 @@ const generateIllustrationsPrompt = ai.definePrompt({
   name: 'generateIllustrationsPrompt',
   input: {schema: GenerateIllustrationsInputSchema},
   output: {schema: GenerateIllustrationsOutputSchema},
-  prompt: `You are a children's book illustrator. Given the story text and theme, you will generate a list of illustrations that would enhance the storytelling.
+  prompt: `Eres un ilustrador de libros infantiles. Dado el texto del cuento y el tema (ambos en español latinoamericano de Perú), generarás una lista de ilustraciones que mejoren la narración.
 
-Instructions:
-1.  Analyze the story text to identify key scenes, characters, and objects that would benefit from visual representation.
-2.  Consider the story's theme to ensure the illustrations align with the overall message and tone.
-3.  Generate a list of concise descriptions for each illustration.
-4.  Use each description to generate an image using the googleai/gemini-2.0-flash-exp model.
-5.  Return the image data URIs in an array.
+Instrucciones:
+1.  Analiza el texto del cuento para identificar escenas clave, personajes y objetos que se beneficiarían de una representación visual. El texto del cuento está en **español latinoamericano (Perú)**.
+2.  Considera el tema del cuento para asegurar que las ilustraciones se alineen con el mensaje general y el tono. El tema está en **español latinoamericano (Perú)**.
+3.  Genera una lista de descripciones concisas para cada ilustración. Estas descripciones deben estar en **español latinoamericano (Perú)**.
+4.  Usa cada descripción para generar una imagen usando el modelo googleai/gemini-2.0-flash-exp.
+5.  Devuelve los URIs de datos de las imágenes en un arreglo.
 
-Story Theme: {{{theme}}}
-Story Text: {{{storyText}}}
+Tema del Cuento: {{{theme}}}
+Texto del Cuento: {{{storyText}}}
 
-Output Format: An array of data URIs representing the images.`,
+Formato de Salida: Un arreglo de URIs de datos representando las imágenes.`,
 });
 
 const generateIllustrationsFlow = ai.defineFlow(
@@ -58,17 +58,24 @@ const generateIllustrationsFlow = ai.defineFlow(
   },
   async input => {
     const storyText = input.storyText;
-    const sentences = storyText.split('.').map(s => s.trim());
-    const illustrations: string[] = [];
+    // Dividir el cuento en frases u oraciones para generar ilustraciones más específicas.
+    // Considerar párrafos si las frases son muy cortas o para ilustraciones más generales.
+    const segments = storyText.split(/[.!?¡¿]\s+/).map(s => s.trim()).filter(s => s.length > 20); // Filtrar segmentos muy cortos
+    
+    if (segments.length === 0 && storyText.length > 0) { // Si no hay segmentos pero hay texto, usar el texto completo para una ilustración
+        segments.push(storyText);
+    }
 
-    for (const sentence of sentences) {
-      if (sentence.length > 0) {
+    const illustrations: string[] = [];
+    const maxIllustrations = 3; // Limitar el número de ilustraciones para no demorar mucho
+
+    for (let i = 0; i < Math.min(segments.length, maxIllustrations); i++) {
+      const segment = segments[i];
+      if (segment.length > 0) {
+        const imageGenPrompt = `Genera una ilustración para el siguiente segmento de un cuento infantil en español: "${segment}". El tema del cuento es "${input.theme}". Estilo: ilustración colorida y alegre para niños.`;
         const {media} = await ai.generate({
           model: 'googleai/gemini-2.0-flash-exp',
-          prompt: [
-            {text: `Generate an illustration for the following sentence: ${sentence}`},
-            {text: `The theme of the story is ${input.theme}`},
-          ],
+          prompt: [{text: imageGenPrompt}],
           config: {responseModalities: ['TEXT', 'IMAGE']},
         });
         if (media?.url) {
