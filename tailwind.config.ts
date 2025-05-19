@@ -8,6 +8,9 @@ export default {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    fontFamily: {
+      sans: ["var(--font-nunito)", "sans-serif"],
+    },
   	extend: {
   		colors: {
   			background: 'hsl(var(--background))',
