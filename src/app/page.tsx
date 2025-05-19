@@ -28,14 +28,14 @@ export default function HomePage() {
       setError(result.error);
       toast({
         variant: "destructive",
-        title: "Oh no! Something went wrong.",
+        title: "¡Oh no! Algo salió mal.",
         description: result.error,
       });
     } else if (result.data) {
       setStoryData(result.data);
       toast({
-        title: "Story Generated!",
-        description: "Your magical tale has been woven.",
+        title: "¡Cuento Generado!",
+        description: "Tu cuento mágico ha sido tejido.",
       });
     }
   };
@@ -44,10 +44,10 @@ export default function HomePage() {
     <div className="container mx-auto px-4 py-8 md:py-12 min-h-screen flex flex-col items-center">
       <header className="text-center mb-10 md:mb-16">
         <h1 className="text-5xl md:text-6xl font-bold text-primary tracking-tight">
-          Story Weaver
+          Tejedor de Historias
         </h1>
         <p className="mt-3 text-xl text-muted-foreground max-w-2xl mx-auto">
-          Craft enchanting children's stories with the magic of AI. Just share your ideas and watch a unique tale unfold!
+          Crea encantadores cuentos infantiles con la magia de la IA. ¡Solo comparte tus ideas y mira cómo se desarrolla una historia única!
         </p>
       </header>
 
@@ -70,7 +70,7 @@ export default function HomePage() {
       </main>
 
       <footer className="mt-16 text-center text-sm text-muted-foreground">
-        <p>&copy; {new Date().getFullYear()} Story Weaver. Let your imagination soar!</p>
+        <p>&copy; {new Date().getFullYear()} Tejedor de Historias. ¡Deja volar tu imaginación!</p>
       </footer>
     </div>
   );

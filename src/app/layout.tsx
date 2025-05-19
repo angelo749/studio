@@ -10,8 +10,8 @@ const nunito = Nunito({
 });
 
 export const metadata: Metadata = {
-  title: 'Story Weaver',
-  description: 'Generate unique children\'s stories with AI',
+  title: 'Tejedor de Historias',
+  description: 'Genera cuentos infantiles únicos con IA',
 };
 
 export default function RootLayout({
@@ -20,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="es-PE">
       <body className={`${nunito.variable} font-sans antialiased`}>
         {children}
         <Toaster />

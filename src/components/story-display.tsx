@@ -27,14 +27,14 @@ export function StoryDisplay({ storyData }: StoryDisplayProps) {
       <CardContent className="space-y-6">
         <div>
           <h2 className="flex items-center gap-2 text-2xl font-semibold mb-2 text-accent">
-            <Users className="h-6 w-6" /> Characters
+            <Users className="h-6 w-6" /> Personajes
           </h2>
           <p className="text-muted-foreground text-lg">{inputCharacters}</p>
         </div>
         <Separator />
         <div>
           <h2 className="flex items-center gap-2 text-2xl font-semibold mb-3 text-accent">
-            <ScrollText className="h-6 w-6" /> Story
+            <ScrollText className="h-6 w-6" /> Cuento
           </h2>
           <div className="space-y-4 text-lg leading-relaxed">
             {storyParagraphs.map((paragraph, index) => (
@@ -44,7 +44,7 @@ export function StoryDisplay({ storyData }: StoryDisplayProps) {
                    <div className="my-4 rounded-lg overflow-hidden shadow-md aspect-video relative w-full max-w-md mx-auto">
                      <Image
                        src={illustrations[index]}
-                       alt={`Illustration for story part ${index + 1}`}
+                       alt={`Ilustración para la parte ${index + 1} del cuento`}
                        layout="fill"
                        objectFit="contain"
                        data-ai-hint="children story illustration"
@@ -61,7 +61,7 @@ export function StoryDisplay({ storyData }: StoryDisplayProps) {
                   <div key={`extra-${index}`} className="my-2 rounded-lg overflow-hidden shadow-md aspect-video relative w-full mx-auto">
                     <Image
                        src={illustrationUrl}
-                       alt={`Extra illustration ${index + 1}`}
+                       alt={`Ilustración adicional ${index + 1}`}
                        layout="fill"
                        objectFit="contain"
                        data-ai-hint="children story illustration"
@@ -74,7 +74,7 @@ export function StoryDisplay({ storyData }: StoryDisplayProps) {
              {illustrations.length === 0 && (
                 <div className="text-center py-4 text-muted-foreground">
                     <ImageIcon className="h-8 w-8 mx-auto mb-2" />
-                    <p>No illustrations generated for this story.</p>
+                    <p>No se generaron ilustraciones para este cuento.</p>
                 </div>
             )}
           </div>
@@ -82,7 +82,7 @@ export function StoryDisplay({ storyData }: StoryDisplayProps) {
         <Separator />
         <div>
           <h2 className="flex items-center gap-2 text-2xl font-semibold mb-2 text-accent">
-            <Lightbulb className="h-6 w-6" /> Moral of the Story
+            <Lightbulb className="h-6 w-6" /> Moraleja del Cuento
           </h2>
           <p className="text-lg italic text-primary font-medium">{storyOutput.moralOfTheStory}</p>
         </div>

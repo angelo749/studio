@@ -29,6 +29,18 @@ interface StoryFormProps {
   isLoading: boolean;
 }
 
+const storyLengthDisplay: Record<typeof storyLengths[number], string> = {
+  short: "Corto",
+  medium: "Medio",
+  long: "Largo",
+};
+
+const readingLevelDisplay: Record<typeof readingLevels[number], string> = {
+  easy: "Fácil",
+  intermediate: "Intermedio",
+  advanced: "Avanzado",
+};
+
 export function StoryForm({ onSubmit, isLoading }: StoryFormProps) {
   const form = useForm<StoryFormValues>({
     resolver: zodResolver(StoryFormSchema),
@@ -47,9 +59,9 @@ export function StoryForm({ onSubmit, isLoading }: StoryFormProps) {
         <div className="flex justify-center items-center mb-4">
           <Wand2 className="h-12 w-12 text-primary" />
         </div>
-        <CardTitle className="text-3xl font-bold">Weave Your Tale</CardTitle>
+        <CardTitle className="text-3xl font-bold">Teje Tu Cuento</CardTitle>
         <CardDescription className="text-muted-foreground">
-          Fill in the details below and let AI craft a unique story for you!
+          Completa los detalles a continuación y deja que la IA cree una historia única para ti.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -60,9 +72,9 @@ export function StoryForm({ onSubmit, isLoading }: StoryFormProps) {
               name="theme"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="flex items-center gap-2 text-lg"><Palette className="h-5 w-5 text-primary" />Story Theme</FormLabel>
+                  <FormLabel className="flex items-center gap-2 text-lg"><Palette className="h-5 w-5 text-primary" />Tema del Cuento</FormLabel>
                   <FormControl>
-                    <Input placeholder="e.g., Adventure in the Enchanted Forest, The Mystery of the Missing Toy" {...field} />
+                    <Input placeholder="Ej: Aventura en el Bosque Encantado, El Misterio del Juguete Perdido" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -73,10 +85,10 @@ export function StoryForm({ onSubmit, isLoading }: StoryFormProps) {
               name="characters"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="flex items-center gap-2 text-lg"><Users className="h-5 w-5 text-primary" />Characters</FormLabel>
+                  <FormLabel className="flex items-center gap-2 text-lg"><Users className="h-5 w-5 text-primary" />Personajes</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="e.g., A brave little fox named Finn, a wise old owl, and a mischievous squirrel"
+                      placeholder="Ej: Un zorrito valiente llamado Finn, un búho sabio y una ardilla traviesa"
                       className="resize-none"
                       {...field}
                     />
@@ -90,9 +102,9 @@ export function StoryForm({ onSubmit, isLoading }: StoryFormProps) {
               name="moral"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="flex items-center gap-2 text-lg"><Award className="h-5 w-5 text-primary" />Moral of the Story</FormLabel>
+                  <FormLabel className="flex items-center gap-2 text-lg"><Award className="h-5 w-5 text-primary" />Moraleja del Cuento</FormLabel>
                   <FormControl>
-                    <Input placeholder="e.g., The importance of friendship, Honesty is the best policy" {...field} />
+                    <Input placeholder="Ej: La importancia de la amistad, La honestidad es la mejor política" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -104,17 +116,17 @@ export function StoryForm({ onSubmit, isLoading }: StoryFormProps) {
                 name="length"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="flex items-center gap-2 text-lg"><Scaling className="h-5 w-5 text-primary" />Story Length</FormLabel>
+                    <FormLabel className="flex items-center gap-2 text-lg"><Scaling className="h-5 w-5 text-primary" />Extensión del Cuento</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select story length" />
+                          <SelectValue placeholder="Selecciona la extensión" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
                         {storyLengths.map((len) => (
-                          <SelectItem key={len} value={len} className="capitalize">
-                            {len.charAt(0).toUpperCase() + len.slice(1)}
+                          <SelectItem key={len} value={len}>
+                            {storyLengthDisplay[len]}
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -128,17 +140,17 @@ export function StoryForm({ onSubmit, isLoading }: StoryFormProps) {
                 name="readingLevel"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="flex items-center gap-2 text-lg"><GraduationCap className="h-5 w-5 text-primary" />Reading Level</FormLabel>
+                    <FormLabel className="flex items-center gap-2 text-lg"><GraduationCap className="h-5 w-5 text-primary" />Nivel de Lectura</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select reading level" />
+                          <SelectValue placeholder="Selecciona el nivel de lectura" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
                         {readingLevels.map((level) => (
-                          <SelectItem key={level} value={level} className="capitalize">
-                            {level.charAt(0).toUpperCase() + level.slice(1)}
+                          <SelectItem key={level} value={level}>
+                            {readingLevelDisplay[level]}
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -152,12 +164,12 @@ export function StoryForm({ onSubmit, isLoading }: StoryFormProps) {
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                  Weaving your story...
+                  Tejiendo tu cuento...
                 </>
               ) : (
                 <>
                   <Sparkles className="mr-2 h-5 w-5" />
-                  Generate Story
+                  Generar Cuento
                 </>
               )}
             </Button>
